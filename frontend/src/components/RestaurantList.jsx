@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react'
 
 import React, { useContext, useEffect } from 'react'
+import RestaurantFinder from '../api/RestaurantFinder'
 import { RestaurantContext } from '../context/RestaurantContext'
 
 export default function RestaurantList(props) {
@@ -31,6 +32,17 @@ export default function RestaurantList(props) {
 
         getRestaurants()
     }, [setRestaurants])
+
+    const handleDelete = async (id) => {
+        try {
+            const response = await RestaurantFinder.delete(`${id}`)
+            setRestaurants(restaurants.filter((restaurant) => {
+                return restaurant.id !== id
+            }))
+        } catch (error) {
+            throw error
+        }
+    }
 
 
     return (
@@ -56,7 +68,7 @@ export default function RestaurantList(props) {
                                 <Td>{'$'.repeat(restaurant.price_range)}</Td>
                                 <Td>Ratings</Td>
                                 <Td><Button size='md' colorScheme='orange'>Edit</Button></Td>
-                                <Td><Button size='md' colorScheme='red'>Delete</Button></Td>
+                                <Td><Button size='md' colorScheme='red' onClick={() => handleDelete(restaurant.id)}>Delete</Button></Td>
                             </Tr>
                         )
                     })}

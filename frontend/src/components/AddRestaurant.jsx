@@ -30,8 +30,8 @@ export default function AddRestaurant() {
 
     return (
         <HStack  spacing={5} align='center'>
-            <Input placeholder='name' onChange={(e)=> setName(e.target.value)} value={name}/>
-            <Input placeholder='location' onChange={(e)=> setLocation(e.target.value)} value={location}/>
+            <Input placeholder='Name' onChange={(e)=> setName(e.target.value)} value={name}/>
+            <Input placeholder='Location' onChange={(e)=> setLocation(e.target.value)} value={location}/>
             <Select placeholder='Price range' onChange={(e)=> setPrice_range(e.target.value)} value={price_range}>
                 {/* <option value="price_range" >Price range</option> */}
                 <option value='1'>$</option>
