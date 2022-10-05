@@ -3,6 +3,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const multer = require('multer')
 const upload = multer()
+const cors = require('cors')
 // const db = require('./db')
 const { pool } = require('./db');
 
@@ -11,6 +12,8 @@ const morgan = require('morgan');
 const app = express();
 
 //middleware
+app.use(cors())
+
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
