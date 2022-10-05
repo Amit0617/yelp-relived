@@ -28,11 +28,26 @@ CREATE TABLE restaurants(
 
 #### Adding rows into table
 ```sql
-INSERT INTO restaurants(name, location, price_range) VALUES('Baba Ka Dhaba', 'Delhi', 1);
+INSERT INTO restaurants(name, location, price_range) VALUES('Baba Ka Dhaba', 'Delhi', 1); --By root user
 ```
 #### Granting permissions to the created user
 ```sql
 GRANT SELECT ON yelp.* TO yelpuser@localhost IDENTIFIED BY PASSWORD '*F99D7220E8A739AB281D53045C98467445CE4DBE';--By root user
 ```
 >`SHOW GRANTS FOR yelpuser@localhost;`  
->Also can be verified by logging into mysql console by yelpuser
+>Also can be verified by logging into mysql/mariadb console by yelpuser
+
+```sql
+GRANT INSERT ON yelp.restaurants TO yelpuser@localhost IDENTIFIED BY PASSWORD '*F99D7220E8A739AB281D53045C98467445CE4DBE';
+```
+```sql
+GRANT UPDATE ON yelp.restaurants TO yelpuser@localhost IDENTIFIED BY PASSWORD '*F99D7220E8A739AB281D53045C98467445CE4DBE';
+```
+```sql
+GRANT DELETE ON yelp.restaurants TO yelpuser@localhost IDENTIFIED BY PASSWORD '*F99D7220E8A739AB281D53045C98467445CE4DBE';
+```
+
+#### Inserting more rows but now as yelpuser
+```sql
+INSERT INTO restaurants(name, location, price_range) VALUES('Haldirams', 'Delhi', 4);
+```
