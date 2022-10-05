@@ -19,10 +19,18 @@ export default function RestaurantList(props) {
     const { restaurants, setRestaurants } = useContext(RestaurantContext)
 
     useEffect(() => {
-        fetch('http://localhost:3001/api/v1/restaurants/')
-            .then(response => response.json())
-            .then(data => setRestaurants(data.data.restaurants))
-    }, [])
+        const getRestaurants = async () => {
+            try {
+                await fetch('http://localhost:3001/api/v1/restaurants/')
+                    .then(response => response.json())
+                    .then(data => setRestaurants(data.data.restaurants))
+            } catch (err) {
+                throw err
+            }
+        }
+
+        getRestaurants()
+    }, [setRestaurants])
 
 
     return (
