@@ -51,3 +51,13 @@ GRANT DELETE ON yelp.restaurants TO yelpuser@localhost IDENTIFIED BY PASSWORD '*
 ```sql
 INSERT INTO restaurants(name, location, price_range) VALUES('Haldirams', 'Delhi', 4);
 ```
+#### Creating a new table for reviews for restaurants
+```sql
+CREATE TABLE reviews(
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    restaurant_id INT NOT NULL REFERENCES restaurants(id),
+    name VARCHAR(50) NOT NULL,
+    reviews TEXT NOT NULL,
+    ratings INT NOT NULL check(ratings > 0 AND ratings <= 5)
+);
+```

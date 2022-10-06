@@ -29,18 +29,17 @@ export default function AddRestaurant() {
     }
 
     return (
-        <HStack  spacing={5} align='center'>
+        <HStack  spacing={5} align='center' margin={6}>
             <Input placeholder='Name' onChange={(e)=> setName(e.target.value)} value={name}/>
             <Input placeholder='Location' onChange={(e)=> setLocation(e.target.value)} value={location}/>
             <Select placeholder='Price range' onChange={(e)=> setPrice_range(e.target.value)} value={price_range}>
-                {/* <option value="price_range" >Price range</option> */}
                 <option value='1'>$</option>
                 <option value='2'>$$</option>
                 <option value='3'>$$$</option>
                 <option value='4'>$$$$</option>
                 <option value='5'>$$$$$</option>
             </Select>
-            <Button size='lg' colorScheme='blue' onClick={handleSubmit} type='submit'>Add</Button>
+            <Button leftIcon={<AddButton/>} size='md' colorScheme='blue' onClick={handleSubmit} padding={6} type='submit'>Add</Button>
         </HStack>
     )
 }

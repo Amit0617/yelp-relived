@@ -12,12 +12,14 @@ import {
 } from '@chakra-ui/react'
 
 import React, { useContext, useEffect } from 'react'
+import {useHistory} from 'react-router-dom'
 import RestaurantFinder from '../api/RestaurantFinder'
 import { RestaurantContext } from '../context/RestaurantContext'
 
 export default function RestaurantList(props) {
 
     const { restaurants, setRestaurants } = useContext(RestaurantContext)
+    let history = useHistory()
 
     useEffect(() => {
         const getRestaurants = async () => {
@@ -35,7 +37,7 @@ export default function RestaurantList(props) {
 
     const handleDelete = async (id) => {
         try {
-            const response = await RestaurantFinder.delete(`${id}`)
+            await RestaurantFinder.delete(`${id}`)
             setRestaurants(restaurants.filter((restaurant) => {
                 return restaurant.id !== id
             }))
@@ -44,6 +46,13 @@ export default function RestaurantList(props) {
         }
     }
 
+    const handleRestaurantClick = (id) => {
+        history.push(`restaurants/${id}`)
+    }
+
+    const handleUpdate = (id) => {
+        history.push(`/restaurants/${id}/update`)
+    }
 
     return (
         <TableContainer>
@@ -63,11 +72,11 @@ export default function RestaurantList(props) {
                     {restaurants && restaurants.map((restaurant) => {
                         return (
                             <Tr key={restaurant.id} spacing='6'>
-                                <Td>{restaurant.name}</Td>
+                                <Td cursor='pointer' onClick={() => handleRestaurantClick(restaurant.id)}>{restaurant.name}</Td>
                                 <Td>{restaurant.location}</Td>
                                 <Td>{'$'.repeat(restaurant.price_range)}</Td>
                                 <Td>Ratings</Td>
-                                <Td><Button size='md' colorScheme='orange'>Edit</Button></Td>
+                                <Td><Button size='md' colorScheme='orange' onClick={() => handleUpdate(restaurant.id)}>Edit</Button></Td>
                                 <Td><Button size='md' colorScheme='red' onClick={() => handleDelete(restaurant.id)}>Delete</Button></Td>
                             </Tr>
                         )
