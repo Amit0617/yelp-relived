@@ -22,16 +22,18 @@ app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-
 app.get('/api/v1/restaurants', async (req, res) => {
     let conn;
     try {
-        const result = await pool.query("select * from restaurants");
+        const result = await pool.query("select * from restaurants left join (select restaurant_id, Cast(AVG(ratings) AS DECIMAL(5,1)) AS avg_rating, count(ratings) AS rating_count from reviews)reviews on restaurants.id=restaurant_id;");
         // res.send(result);
         // send object with status and length of response
-        res.status(200).json({
+        res.send(JSON.stringify({
             status: "success",
             count: result.length,
             data: {
                 restaurants: result
             }
-        })
+        }, (key, value) =>
+        typeof value === "bigint" ? Number(value) : value
+    ))
     } catch (err) {
         throw err;
     } finally {
@@ -45,22 +47,28 @@ app.get("/api/v1/restaurants/:id", async (req, res) => {
     console.log(req.params.id);
     let conn;
     try {
-        const result = await pool.query("select * from restaurants where id = ?", [req.params.id]);
+        const restaurants = await pool.query("select name from restaurants where id = ?", [req.params.id]);
+        const reviews = await pool.query('select * from reviews where restaurant_id = ?', [req.params.id])
+        const ratings = await pool.query("select Cast(AVG(ratings) AS DECIMAL(10,1)) AS avg_rating, count(ratings) AS rating_count from reviews where restaurant_id=?", [req.params.id])
         // res.send(result);
         // send object with status and length of response
-        res.status(200).json({
+        res.send(JSON.stringify({
             status: "success",
-            count: result.length,
+            count: reviews.length,
             data: {
-                restaurants: result
+                restaurants,
+                reviews,
+                ratings
             }
-        })
+        }, (key, value) =>
+            typeof value === "bigint" ? Number(value) : value
+        ))
     } catch (err) {
-        throw err;
-    } finally {
-        if (conn)
-            return conn.release();
-    }
+    throw err;
+} finally {
+    if (conn)
+        return conn.release();
+}
 })
 
 // Create a restaurant 
@@ -131,6 +139,29 @@ app.delete("/api/v1/restaurants/:id", async (req, res) => {
     }
 })
 
+// Add a review
+app.post("/api/v1/restaurants/:id/addReview", upload.none(), async (req, res) => {
+    console.log(req.body);
+    let conn;
+    try {
+        const result = await pool.query("insert into reviews(restaurant_id, name, ratings, reviews) values(?, ?, ?, ?) returning *;",
+            [req.body.restaurant_id, req.body.name, req.body.ratings, req.body.reviews]);
+        // res.send(result);
+        // send object with status and length of response
+        res.status(201).json({
+            status: "success",
+            count: result.length,
+            data: {
+                review: result
+            }
+        })
+    } catch (err) {
+        throw err;
+    } finally {
+        if (conn)
+            return conn.release();
+    }
+})
 // const port = 3001
 const port = process.env.PORT || 3001
 app.listen(

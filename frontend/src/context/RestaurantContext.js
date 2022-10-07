@@ -1,16 +1,23 @@
-import React, {useState, createContext} from 'react'
+import React, { useState, createContext } from 'react'
 
 export const RestaurantContext = createContext()
 
-export const RestaurantContextProvider = props => {
-  const [restaurants, setRestaurants] = useState([])
+export const RestaurantContextProvider = (props) => {
+  const [restaurants, setRestaurants] = useState(null)
   const [selectedRestaurant, setSelectedRestaurant] = useState(null)
 
-  const addRestaurants = (restaurant)=>{
+  const addRestaurants = (restaurant) => {
     setRestaurants([...restaurants, restaurant])
   }
   return (
-    <RestaurantContext.Provider value={{restaurants, setRestaurants, addRestaurants, selectedRestaurant, setSelectedRestaurant}}>
+    <RestaurantContext.Provider
+      value={{
+        restaurants,
+        setRestaurants,
+        addRestaurants,
+        selectedRestaurant,
+        setSelectedRestaurant
+      }}>
       {props.children}
     </RestaurantContext.Provider>
   )

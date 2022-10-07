@@ -2,19 +2,20 @@ import {
     Table,
     Thead,
     Tbody,
-    // Tfoot,
     Tr,
     Th,
     Td,
     TableCaption,
     TableContainer,
-    Button
+    Button,
+    Text
 } from '@chakra-ui/react'
 
 import React, { useContext, useEffect } from 'react'
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import RestaurantFinder from '../api/RestaurantFinder'
 import { RestaurantContext } from '../context/RestaurantContext'
+import StarRating from './StarRating'
 
 export default function RestaurantList(props) {
 
@@ -54,6 +55,24 @@ export default function RestaurantList(props) {
         history.push(`/restaurants/${id}/update`)
     }
 
+    const renderRatings = (restaurant) => {
+
+        if (!restaurant.rating_count) {
+            return (
+                <Text>0 reviews</Text>
+            )
+        }
+        else {
+            return (
+                <>
+                    <StarRating rating={restaurant.avg_rating} />
+                    <span>({restaurant.rating_count})</span>
+                </>
+            )
+        }
+
+    }
+
     return (
         <TableContainer>
             <Table variant='striped' colorScheme='gray'>
@@ -75,20 +94,13 @@ export default function RestaurantList(props) {
                                 <Td cursor='pointer' onClick={() => handleRestaurantClick(restaurant.id)}>{restaurant.name}</Td>
                                 <Td>{restaurant.location}</Td>
                                 <Td>{'$'.repeat(restaurant.price_range)}</Td>
-                                <Td>Ratings</Td>
+                                <Td>{renderRatings(restaurant)}</Td>
                                 <Td><Button size='md' colorScheme='orange' onClick={() => handleUpdate(restaurant.id)}>Edit</Button></Td>
                                 <Td><Button size='md' colorScheme='red' onClick={() => handleDelete(restaurant.id)}>Delete</Button></Td>
                             </Tr>
                         )
                     })}
                 </Tbody>
-                {/* <Tfoot> */}
-                {/* <Tr> */}
-                {/* <Th>To convert</Th> */}
-                {/* <Th>into</Th> */}
-                {/* <Th isNumeric>multiply by</Th> */}
-                {/* </Tr> */}
-                {/* </Tfoot> */}
             </Table>
         </TableContainer>
     )

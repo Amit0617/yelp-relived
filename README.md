@@ -38,7 +38,7 @@ GRANT SELECT ON yelp.* TO yelpuser@localhost IDENTIFIED BY PASSWORD '*F99D7220E8
 >Also can be verified by logging into mysql/mariadb console by yelpuser
 
 ```sql
-GRANT INSERT ON yelp.restaurants TO yelpuser@localhost IDENTIFIED BY PASSWORD '*F99D7220E8A739AB281D53045C98467445CE4DBE';
+GRANT INSERT ON yelp.* TO yelpuser@localhost IDENTIFIED BY PASSWORD '*F99D7220E8A739AB281D53045C98467445CE4DBE';
 ```
 ```sql
 GRANT UPDATE ON yelp.restaurants TO yelpuser@localhost IDENTIFIED BY PASSWORD '*F99D7220E8A739AB281D53045C98467445CE4DBE';
@@ -60,4 +60,8 @@ CREATE TABLE reviews(
     reviews TEXT NOT NULL,
     ratings INT NOT NULL check(ratings > 0 AND ratings <= 5)
 );
+```
+#### Inserting rows into reviews
+```sql
+INSERT INTO reviews(restaurant_id, name, ratings, reviews) VALUES(1, 'Rakesh', 2, 'OK OK');
 ```
