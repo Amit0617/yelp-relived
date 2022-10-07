@@ -35,16 +35,12 @@ export default function RestaurantDetailsPage() {
       <Stack align='center' spacing='4' margin={4} direction='column'>
         <Heading >{selectedRestaurant?.restaurants[0]?.name}</Heading>
         <Stack align='center' direction='row'>
-          {selectedRestaurant?.ratings[0]?.rating_count ? <><StarRating rating={selectedRestaurant?.ratings[0].avg_rating}/><Text>({selectedRestaurant?.ratings[0].rating_count})</Text></> : <Text>No reviews</Text>}
-        {/* if (! selectedRestaurant.ratings[0].rating_count) {
-                <Text>0 reviews</Text>
-        }
-        else {
-                <>
-                    <StarRating rating={selectedRestaurant?.ratings[0]?.avg_rating} />
-                    <span>({selectedRestaurant?.ratings[0].rating_count})</span>
-                </>
-        } */}
+          {selectedRestaurant?.ratings[0]?.rating_count
+            ? <>
+              <StarRating rating={selectedRestaurant?.ratings[0].avg_rating} />
+              <Text>({selectedRestaurant?.ratings[0].rating_count})</Text>
+            </>
+            : <Text>No reviews</Text>}
         </Stack>
       </Stack>
       <AddReview />
