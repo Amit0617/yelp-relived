@@ -6,6 +6,8 @@ import Reviews from '../components/Reviews'
 import StarRating from '../components/StarRating'
 import { RestaurantContext } from '../context/RestaurantContext'
 import { Heading, Stack, Text } from '@chakra-ui/react'
+import PizzaOutline from '../components/Pizza_Outline'
+
 export default function RestaurantDetailsPage() {
 
   const { id } = useParams()
@@ -46,7 +48,9 @@ export default function RestaurantDetailsPage() {
       <AddReview />
 
       {/* If selectedRestaurant not null only then iterate reviews */}
-      <Reviews reviews={selectedRestaurant?.reviews || []} />
-    </div>
+      {selectedRestaurant?.ratings[0]?.rating_count
+        ? <Reviews reviews={selectedRestaurant?.reviews || []} />
+        : <Stack spacing={-5} margin='10' align='center'><PizzaOutline opacity={0.5} zIndex='hide'/><Heading size='2xl' zIndex='banner' color='#FFD56B' opacity={0.4}>Cook Some Reviews Here</Heading></Stack>}
+        </div>
   )
 }

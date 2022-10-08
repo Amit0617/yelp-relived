@@ -13,11 +13,11 @@ export default function Home() {
         <Header/>
         {/* <SearchBar /> */}
         <AddRestaurant/>
-        <Stack direction='row' maxH='1'>
-                <SvgChef opacity={0.3} zIndex='hide' /><Restaurant opacity={0.3} />
+        <Stack direction='row' position='relative' zIndex="hide" maxH='1'>
+                <SvgChef opacity={0.3} /><Restaurant opacity={0.3} />
             </Stack>
 
-        <RestaurantList position='absolute' zIndex="banner" />
+        <RestaurantList  />
 
     </div>
   )

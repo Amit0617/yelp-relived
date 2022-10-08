@@ -7,7 +7,7 @@ export default function Header() {
     return (
         <>
             <ToggleMode />
-            <Heading as='h1' size='4xl' align='center' padding='10'>Yelp!</Heading>
+            <Heading as='h1' size='4xl' color='#FF7B54' align='center' padding='10'>Yelp!</Heading>
             
         </>
     )

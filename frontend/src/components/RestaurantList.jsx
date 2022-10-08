@@ -134,7 +134,7 @@ export default function RestaurantList(props) {
             {/* </HStack> */}
             
             <TableContainer>
-                <Table variant='striped' colorScheme='gray'>
+                <Table colorScheme='gray'>
                     <TableCaption>Restaurants available near you</TableCaption>
                     <Thead>
                         <Tr>

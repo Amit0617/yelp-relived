@@ -5,8 +5,8 @@ export default function ToggleMode() {
     const { colorMode, toggleColorMode } = useColorMode()
     return (
       <header>
-        <Button onClick={toggleColorMode}>
-          Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
+        <Button right='0' position='absolute' onClick={toggleColorMode}>
+          {colorMode === 'light' ? 'Dark' : 'Light'}
         </Button>
       </header>
     )

@@ -7,7 +7,7 @@ const cors = require('cors')
 // const db = require('./db')
 const { pool } = require('./db');
 
-const morgan = require('morgan');
+// const morgan = require('morgan');
 
 const app = express();
 
