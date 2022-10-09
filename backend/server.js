@@ -32,8 +32,8 @@ app.get('/api/v1/restaurants', async (req, res) => {
                 restaurants: result
             }
         }, (key, value) =>
-        typeof value === "bigint" ? Number(value) : value
-    ))
+            typeof value === "bigint" ? Number(value) : value
+        ))
     } catch (err) {
         throw err;
     } finally {
@@ -64,11 +64,11 @@ app.get("/api/v1/restaurants/:id", async (req, res) => {
             typeof value === "bigint" ? Number(value) : value
         ))
     } catch (err) {
-    throw err;
-} finally {
-    if (conn)
-        return conn.release();
-}
+        throw err;
+    } finally {
+        if (conn)
+            return conn.release();
+    }
 })
 
 // Create a restaurant 
@@ -164,7 +164,22 @@ app.post("/api/v1/restaurants/:id/addReview", upload.none(), async (req, res) =>
 })
 // const port = 3001
 const port = process.env.PORT || 3001
-app.listen(
+const server = app.listen(
     port,
     () => console.log(`server listening on port ${port}`)
 )
+// server();
+
+// process.on('SIGTERM', () => {
+//     debug('SIGTERM signal received: closing HTTP server')
+//     server.close(() => {
+//         debug('HTTP server closed')
+//     })
+// })
+
+// process.on('SIGINT', () => {
+//     debug('SIGINT signal received: closing HTTP server')
+//     server.close(() => {
+//         debug('HTTP server closed')
+//     })
+// })

@@ -26,7 +26,7 @@ export default function UpdateRestaurant() {
     useEffect(() => {
         const getRestaurants = async () => {
             try {
-                await fetch(`http://localhost:3001/api/v1/restaurants/${id}`)
+                await fetch(`https://yelp-relived-backend.herokuapp.com/api/v1/restaurants/${id}`)
                     .then(response => response.json())
                     .then(data => {
                         setName(data.data.restaurants[0].name)
