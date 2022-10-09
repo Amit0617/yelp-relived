@@ -32,7 +32,7 @@ export default function RestaurantList(props) {
     useEffect(() => {
         const getRestaurants = async () => {
             try {
-                await fetch('http://localhost:3001/api/v1/restaurants/')
+                await fetch('https://yelp-relived-backend.herokuapp.com/api/v1/restaurants')
                     .then(response => response.json())
                     .then(data => setRestaurants(data.data.restaurants))
             } catch (err) {
