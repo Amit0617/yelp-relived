@@ -12,7 +12,7 @@ import {
     Select,
     Input,
     InputLeftElement,
-    HStack
+    Stack
 } from '@chakra-ui/react'
 
 import React, { useContext, useState, useEffect, useCallback } from 'react'
@@ -21,6 +21,11 @@ import RestaurantFinder from '../api/RestaurantFinder'
 import { RestaurantContext } from '../context/RestaurantContext'
 import StarRating from './StarRating'
 import LocationLogo from './LocationLogo'
+import RestaurantIcon from './RestaurantIcon'
+import MoneyIcon from './MoneyIcon'
+import EditIcon from './EditIcon'
+import DeleteIcon from './DeleteIcon'
+
 export default function RestaurantList(props) {
 
     const { restaurants, setRestaurants } = useContext(RestaurantContext)
@@ -153,12 +158,12 @@ export default function RestaurantList(props) {
                             .map((restaurant) => {
                                 return (
                                     <Tr key={restaurant.id} spacing='6'>
-                                        <Td cursor='pointer' onClick={() => handleRestaurantClick(restaurant.id)}>{restaurant.name}</Td>
-                                        <Td>{restaurant.location}</Td>
-                                        <Td>{'$'.repeat(restaurant.price_range)}</Td>
+                                        <Td cursor='pointer' onClick={() => handleRestaurantClick(restaurant.id)}>{<Stack direction='row'><RestaurantIcon width='30' /><span>{restaurant.name}</span></Stack>}</Td>
+                                        <Td>{<Stack direction='row'><LocationLogo /><span>{restaurant.location}</span></Stack>}</Td>
+                                        <Td>{<Stack direction='row' spacing={1}>{[...Array(restaurant.price_range)].map((e,i) => <MoneyIcon width='30' key={i}/>)}</Stack>}</Td>
                                         <Td>{renderRatings(restaurant)}</Td>
-                                        <Td><Button size='md' colorScheme='orange' onClick={() => handleUpdate(restaurant.id)}>Edit</Button></Td>
-                                        <Td><Button size='md' colorScheme='red' onClick={() => handleDelete(restaurant.id)}>Delete</Button></Td>
+                                        <Td><Button leftIcon={<EditIcon width='15'/>} variant='outline' size='md' colorScheme='orange' onClick={() => handleUpdate(restaurant.id)}>Edit</Button></Td>
+                                        <Td><Button leftIcon={<DeleteIcon width='15'/>} variant='outline' size='md' colorScheme='red' onClick={() => handleDelete(restaurant.id)}>Delete</Button></Td>
                                     </Tr>
                                 )
                             })}

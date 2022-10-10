@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-
 app.get('/api/v1/restaurants', async (req, res) => {
     let conn;
     try {
-        const result = await pool.query("select * from restaurants left join (select restaurant_id, Cast(AVG(ratings) AS DECIMAL(5,1)) AS avg_rating, count(ratings) AS rating_count from reviews)reviews on restaurants.id=restaurant_id;");
+        const result = await pool.query("select * from restaurants left join (select restaurant_id, Cast(AVG(ratings) AS DECIMAL(5,1)) AS avg_rating, count(ratings) AS rating_count from reviews group by restaurant_id)reviews on restaurants.id=restaurant_id;");
         // res.send(result);
         // send object with status and length of response
         res.send(JSON.stringify({
@@ -47,9 +47,9 @@ app.get("/api/v1/restaurants/:id", async (req, res) => {
     console.log(req.params.id);
     let conn;
     try {
-        const restaurants = await pool.query("select name from restaurants where id = ?", [req.params.id]);
+        const restaurants = await pool.query("select * from restaurants where id = ?", [req.params.id]);
         const reviews = await pool.query('select * from reviews where restaurant_id = ?', [req.params.id])
-        const ratings = await pool.query("select Cast(AVG(ratings) AS DECIMAL(10,1)) AS avg_rating, count(ratings) AS rating_count from reviews where restaurant_id=?", [req.params.id])
+        const ratings = await pool.query("select Cast(AVG(ratings) AS DECIMAL(10,1)) AS avg_rating, count(ratings) AS rating_count from reviews group by restaurant_id having restaurant_id=?", [req.params.id])
         // res.send(result);
         // send object with status and length of response
         res.send(JSON.stringify({
