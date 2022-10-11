@@ -8,7 +8,7 @@ export default function ToggleMode() {
     return (
       <header>
         <Button right='0' position='absolute' onClick={toggleColorMode}>
-          {colorMode === 'light' ? <><DarkModeIcon border-ra width='20' /><span>Dark</span></> : <><LightModeIcon width='20'/><span>  Light</span></>}
+          {colorMode === 'light' ? <><DarkModeIcon width='20' /><span>Dark</span></> : <><LightModeIcon width='20'/><span>  Light</span></>}
         </Button>
       </header>
     )

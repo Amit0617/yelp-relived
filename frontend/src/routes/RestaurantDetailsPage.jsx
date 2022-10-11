@@ -50,7 +50,7 @@ export default function RestaurantDetailsPage() {
       {/* If selectedRestaurant not null only then iterate reviews */}
       {selectedRestaurant?.ratings[0]?.rating_count
         ? <Reviews reviews={selectedRestaurant?.reviews || []} />
-        : <Stack spacing={-5} margin='10' align='center'><PizzaOutline opacity={0.5} zIndex='hide'/><Heading size='2xl' zIndex='banner' color='#FFD56B' opacity={0.4}>Cook Some Reviews Here</Heading></Stack>}
+        : <Stack spacing={-5} margin='10' align='center'><PizzaOutline opacity={0.5} /><Heading size='2xl' zIndex='banner' color='#FFD56B' opacity={0.4}>Cook Some Reviews Here</Heading></Stack>}
         </div>
   )
 }

@@ -30,16 +30,16 @@ export default function AddRestaurant() {
 
     return (
         <HStack  spacing={5} align='center' margin={6}>
-            <Input placeholder='Name' onChange={(e)=> setName(e.target.value)} value={name}/>
-            <Input placeholder='Location' onChange={(e)=> setLocation(e.target.value)} value={location}/>
-            <Select placeholder='Price range' onChange={(e)=> setPrice_range(e.target.value)} value={price_range}>
+            <Input placeholder='Name' boxShadow='md' rounded='lg' onChange={(e)=> setName(e.target.value)} value={name}/>
+            <Input placeholder='Location' boxShadow='md' rounded='lg' onChange={(e)=> setLocation(e.target.value)} value={location}/>
+            <Select placeholder='Price range' boxShadow='md' rounded='lg' onChange={(e)=> setPrice_range(e.target.value)} value={price_range}>
                 <option value='1'>$</option>
                 <option value='2'>$$</option>
                 <option value='3'>$$$</option>
                 <option value='4'>$$$$</option>
                 <option value='5'>$$$$$</option>
             </Select>
-            <Button leftIcon={<AddButton/>} size='md' colorScheme='blue' onClick={handleSubmit} padding={6} type='submit'>Add</Button>
+            <Button leftIcon={<AddButton/>} size='md' boxShadow='md' rounded='lg' colorScheme='blue' onClick={handleSubmit} padding={6} type='submit'>Add</Button>
         </HStack>
     )
 }
