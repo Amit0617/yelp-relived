@@ -9,10 +9,13 @@ import {
     TableContainer,
     Button,
     Text,
-    Select,
-    Input,
-    InputLeftElement,
-    Stack
+    Flex,
+    Spacer,
+    Stack,
+    Box,
+    Heading,
+    ButtonGroup,
+    IconButton
 } from '@chakra-ui/react'
 
 import React, { useContext, useState, useEffect, useCallback } from 'react'
@@ -76,7 +79,7 @@ export default function RestaurantList(props) {
                     return restaurantB[0].localeCompare(restaurantA[0])
                 case "1":
                 default:
-                    // return getTotalGroupSizes(restaurantB) - getTotalGroupSizes(restaurantA)
+                // return getTotalGroupSizes(restaurantB) - getTotalGroupSizes(restaurantA)
             }
         },
         [_sortingValue]
@@ -109,6 +112,28 @@ export default function RestaurantList(props) {
 
     }
 
+    const RestaurantCards = (restaurant) => {
+        return (
+            <Box m='2' p='4' height='max-content' width='sm' borderRadius='md' shadow='md' borderWidth='1px' key={restaurant.id}>
+                <Flex>
+                    <Stack direction='row'><RestaurantIcon width='30' /><Heading cursor='pointer' onClick={() => handleRestaurantClick(restaurant.id)} size='md'>{restaurant.name}</Heading></Stack>
+                    <Spacer />
+                    <ButtonGroup isAttached>
+                        <IconButton variant='outline' aria-label='Edit Details' icon={<EditIcon width='15' />} onClick={() => handleUpdate(restaurant.id)}/>
+                        <IconButton aria-label='Delete Restaurant' icon={<DeleteIcon width='15' />} onClick={() => handleDelete(restaurant.id)}/>
+                    </ButtonGroup>
+                </Flex>
+                <Stack paddingTop='4' direction='row'><LocationLogo /><span>{restaurant.location}</span></Stack>
+                <Text as='sub'>Price Range:</Text>
+                <Flex>
+                    <Stack direction='row' spacing={1}>{[...Array(restaurant.price_range)].map((e, i) => <MoneyIcon width='30' key={i} />)}</Stack>
+                    <Spacer />
+                    <span>{renderRatings(restaurant)}</span>
+                </Flex>
+            </Box>
+        )
+    }
+
     return (
         <>
             {/* <HStack justify="space-between" mt="80px" mb="10">
@@ -125,8 +150,8 @@ export default function RestaurantList(props) {
                     />
                 </InputGroup> */}
 
-                {/* Sort social networks in alphabetical or inverted order or with most members first */}
-                {/* <Select
+            {/* Sort social networks in alphabetical or inverted order or with most members first */}
+            {/* <Select
                     value={_sortingValue}
                     onChange={(event) => setSortingValue(event.target.value)}
                     maxWidth="250px"
@@ -137,7 +162,7 @@ export default function RestaurantList(props) {
                     <option value="3">Z-A</option>
                 </Select> */}
             {/* </HStack> */}
-            
+{/* 
             <TableContainer>
                 <Table colorScheme='gray'>
                     <TableCaption>Restaurants available near you</TableCaption>
@@ -160,16 +185,21 @@ export default function RestaurantList(props) {
                                     <Tr key={restaurant.id} spacing='6'>
                                         <Td cursor='pointer' onClick={() => handleRestaurantClick(restaurant.id)}>{<Stack direction='row'><RestaurantIcon width='30' /><span>{restaurant.name}</span></Stack>}</Td>
                                         <Td>{<Stack direction='row'><LocationLogo /><span>{restaurant.location}</span></Stack>}</Td>
-                                        <Td>{<Stack direction='row' spacing={1}>{[...Array(restaurant.price_range)].map((e,i) => <MoneyIcon width='30' key={i}/>)}</Stack>}</Td>
+                                        <Td>{<Stack direction='row' spacing={1}>{[...Array(restaurant.price_range)].map((e, i) => <MoneyIcon width='30' key={i} />)}</Stack>}</Td>
                                         <Td>{renderRatings(restaurant)}</Td>
-                                        <Td><Button leftIcon={<EditIcon width='15'/>} variant='outline' size='md' colorScheme='orange' onClick={() => handleUpdate(restaurant.id)}>Edit</Button></Td>
-                                        <Td><Button leftIcon={<DeleteIcon width='15'/>} variant='outline' size='md' colorScheme='red' onClick={() => handleDelete(restaurant.id)}>Delete</Button></Td>
+                                        <Td><Button leftIcon={<EditIcon width='15' />} variant='outline' size='md' colorScheme='orange' onClick={() => handleUpdate(restaurant.id)}>Edit</Button></Td>
+                                        <Td><Button leftIcon={<DeleteIcon width='15' />} variant='outline' size='md' colorScheme='red' onClick={() => handleDelete(restaurant.id)}>Delete</Button></Td>
                                     </Tr>
                                 )
                             })}
                     </Tbody>
                 </Table>
-            </TableContainer>
+            </TableContainer> */}
+            <Stack wrap='wrap' shouldWrapChildren='true' direction={'row'}>
+                {restaurants && restaurants.map((restaurant) => {
+                    return (<RestaurantCards  {...restaurant} />)
+                })}
+            </Stack>
         </>
 
     )
