@@ -17,8 +17,15 @@ app.use(cors())
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
+if(!pool){
+	app.get('/', (req, res) => {
+		res.send('Backend is up, connection from database seems broken')
+	})
+}
+
 //Routes
 //List all restaurants
+
 app.get('/api/v1/restaurants', async (req, res) => {
     let conn;
     try {
