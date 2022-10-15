@@ -126,7 +126,7 @@ export default function RestaurantList(props) {
                 <Stack paddingTop='4' direction='row'><LocationLogo /><span>{restaurant.location}</span></Stack>
                 <Text as='sub'>Price Range:</Text>
                 <Flex>
-                    <Stack direction='row' spacing={1}>{[...Array(restaurant.price_range)].map((e, i) => <MoneyIcon width='30' key={i} />)}</Stack>
+                    <Stack direction='row' spacing={1}>{[...Array(restaurant.price_range)].map((e, i) => <MoneyIcon width='20' key={i} />)}</Stack>
                     <Spacer />
                     <span>{renderRatings(restaurant)}</span>
                 </Flex>
